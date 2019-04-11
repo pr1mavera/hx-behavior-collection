@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>命令队列 | 华夏用户行为分析（基于埋点）接入文档</title>
+    <meta name="description" content="此文档用于帮助官微前端开发人员更好的配置和收集用户的行为数据。">
+    <link rel="icon" href="./favicon.ico">
+    
+    <link rel="preload" href="/hx-behavior-collection/assets/css/0.styles.34c5ec2a.css" as="style"><link rel="preload" href="/hx-behavior-collection/assets/js/app.4c72d74d.js" as="script"><link rel="preload" href="/hx-behavior-collection/assets/js/5.3a53e5fc.js" as="script"><link rel="prefetch" href="/hx-behavior-collection/assets/js/2.8c50750e.js"><link rel="prefetch" href="/hx-behavior-collection/assets/js/3.150c01a8.js"><link rel="prefetch" href="/hx-behavior-collection/assets/js/4.bc366fa3.js"><link rel="prefetch" href="/hx-behavior-collection/assets/js/6.700d42d8.js"><link rel="prefetch" href="/hx-behavior-collection/assets/js/7.a0ffb021.js"><link rel="prefetch" href="/hx-behavior-collection/assets/js/8.692746b7.js"><link rel="prefetch" href="/hx-behavior-collection/assets/js/9.d93e2f94.js">
+    <link rel="stylesheet" href="/hx-behavior-collection/assets/css/0.styles.34c5ec2a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/hx-behavior-collection/" class="home-link router-link-active"><!----> <span class="site-name">华夏用户行为分析（基于埋点）接入文档</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/hx-behavior-collection/" class="sidebar-link">介绍</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hx-behavior-collection/#准备工作" class="sidebar-link">准备工作</a></li></ul></li><li><a href="/hx-behavior-collection/base.html" class="sidebar-link">接入基础脚本</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hx-behavior-collection/base.html#原理" class="sidebar-link">原理</a></li><li class="sidebar-sub-header"><a href="/hx-behavior-collection/base.html#插入位置" class="sidebar-link">插入位置</a></li><li class="sidebar-sub-header"><a href="/hx-behavior-collection/base.html#示例代码" class="sidebar-link">示例代码</a></li></ul></li><li><a href="/hx-behavior-collection/command.html" class="active sidebar-link">命令队列</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hx-behavior-collection/command.html#获取" class="sidebar-link">获取</a></li><li class="sidebar-sub-header"><a href="/hx-behavior-collection/command.html#原理及基本使用" class="sidebar-link">原理及基本使用</a></li><li class="sidebar-sub-header"><a href="/hx-behavior-collection/command.html#传参格式" class="sidebar-link">传参格式</a></li></ul></li><li><a href="/hx-behavior-collection/setAccount.html" class="sidebar-link">命令 - 注册授权</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hx-behavior-collection/setAccount.html#参数" class="sidebar-link">参数</a></li><li class="sidebar-sub-header"><a href="/hx-behavior-collection/setAccount.html#调用时机" class="sidebar-link">调用时机</a></li></ul></li><li><a href="/hx-behavior-collection/enterPage.html" class="sidebar-link">命令 - 页面载入</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hx-behavior-collection/enterPage.html#参数" class="sidebar-link">参数</a></li><li class="sidebar-sub-header"><a href="/hx-behavior-collection/enterPage.html#调用时机" class="sidebar-link">调用时机</a></li></ul></li><li><a href="/hx-behavior-collection/sendEvent.html" class="sidebar-link">命令 - 事件触发</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hx-behavior-collection/sendEvent.html#参数" class="sidebar-link">参数</a></li><li class="sidebar-sub-header"><a href="/hx-behavior-collection/sendEvent.html#调用时机" class="sidebar-link">调用时机</a></li></ul></li></ul> </div> <div class="page"> <div class="content"><h1 id="命令队列"><a href="#命令队列" aria-hidden="true" class="header-anchor">#</a> 命令队列</h1> <h2 id="获取"><a href="#获取" aria-hidden="true" class="header-anchor">#</a> 获取</h2> <p>你可以在任意位置通过关键字 <code>_haq</code> 获取到全局命令队列。</p> <h2 id="原理及基本使用"><a href="#原理及基本使用" aria-hidden="true" class="header-anchor">#</a> 原理及基本使用</h2> <p>实际上命令队列本身就是一个消息推送器（类似于 node 里面的 <code>EventEmitter</code> ），并且它的行为是可观测的（类似于 rxjs 里面的可观测数据管道），也就是说你可以在现有项目中的任意位置的任意 macrotask 或者 microtask 中通过 <code>_haq.push()</code> 方法动态的向命令队列中添加命令。示例：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// macrotask</span>
+_haq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token operator">...</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    _haq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token operator">...</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// microtask</span>
+<span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    _haq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token operator">...</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// dom事件中的回调</span>
+window<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    _haq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token operator">...</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> someEle <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'myEle'</span><span class="token punctuation">)</span>
+someEle<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> <span class="token parameter">e</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    _haq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token operator">...</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="传参格式"><a href="#传参格式" aria-hidden="true" class="header-anchor">#</a> 传参格式</h2> <p>传参遵循以下规则：</p> <ul><li>你可以一次推送一条或者多条命令，每条命令都以数组的方式传入</li> <li>每条命令的第一个参数都是<strong>命令名称</strong>，后面的参数均作为<strong>配置参数</strong></li> <li>命令出入的所有参数（包括<strong>命令名称</strong>及<strong>配置参数</strong>），格式均为字符串</li> <li><strong>配置参数</strong>可以以两种方式传入：
+<ol><li>以数组的方式顺序传入</li> <li>包装成对象整体传入</li></ol></li></ul> <p>以事件为例：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 以数组的方式顺序传入</span>
+_haq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token string">'_sendEvent'</span><span class="token punctuation">,</span> <span class="token string">'我的客服'</span><span class="token punctuation">,</span> <span class="token string">'click'</span><span class="token punctuation">,</span> <span class="token string">'我点了一下按钮'</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 包装成对象整体传入</span>
+_haq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token string">'_sendEvent'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">'我的客服'</span><span class="token punctuation">,</span>
+    action<span class="token punctuation">:</span> <span class="token string">'click'</span><span class="token punctuation">,</span>
+    desc<span class="token punctuation">:</span> <span class="token string">'我点了一下按钮'</span>
+<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 一次传入多条命令</span>
+_haq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>
+    <span class="token punctuation">[</span> <span class="token string">'_sendEvent'</span><span class="token punctuation">,</span> <span class="token string">'我的客服'</span><span class="token punctuation">,</span> <span class="token string">'playing'</span><span class="token punctuation">,</span> <span class="token string">'视频开始播放辣'</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span> <span class="token string">'_sendEvent'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        title<span class="token punctuation">:</span> <span class="token string">'我的客服'</span><span class="token punctuation">,</span>
+        action<span class="token punctuation">:</span> <span class="token string">'click'</span><span class="token punctuation">,</span>
+        desc<span class="token punctuation">:</span> <span class="token string">'我点了一下按钮'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">)</span>
+</code></pre></div></div> <div class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">4/11/2019, 3:25:29 PM</span></div></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/hx-behavior-collection/base.html" class="prev">
+          接入基础脚本
+        </a></span> <span class="next"><a href="/hx-behavior-collection/setAccount.html">
+          命令 - 注册授权
+        </a>
+        →
+      </span></p></div> </div> <!----></div></div>
+    <script src="/hx-behavior-collection/assets/js/app.4c72d74d.js" defer></script><script src="/hx-behavior-collection/assets/js/5.3a53e5fc.js" defer></script>
+  </body>
+</html>
